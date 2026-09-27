@@ -41,6 +41,11 @@ def create_dataset() -> pd.Series:
 def clean_dataset(series: pd.Series) -> pd.Series:
     cleaned_series = pd.to_numeric(series, errors="coerce")
     cleaned_series = cleaned_series.dropna()
+
+    # Проверка целочисленности значений
+    cleaned_series = cleaned_series[cleaned_series % 1 == 0]
+
+    # Проверка попадания значений в допустимый диапазон
     cleaned_series = cleaned_series[
         (cleaned_series >= MIN_VALUE) & (cleaned_series <= MAX_VALUE)
     ]
